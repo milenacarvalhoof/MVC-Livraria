@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout.html}">
+<meta charset="UTF-8">
+<div layout:fragment="content">
+	<div class="alert alert-primary" th:if="${mensagem != null}" th:text="${mensagem}">
+	</div>
+	<div class="card">
+		<div class="card-header">
+			<p class="text-primary">Novo Autor</p>
+		</div>
+		<div class="card-body">
+			<form method="POST" th:object="${autor}" th:action="@{/autor/novo}">
+				<input type="hidden" th:field="*{id}">
+				<div class="form-group mb-3">
+					<label for="nome">Nome do Autor:</label> 
+					<input
+						class="form-control" type="text" th:field="*{nome}" required></input>
+					<div class="invalid-feedback" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></div>	
+				</div>
+				<button type="submit" class="btn btn-primary">Salvar Autor</button>
+			</form>
+		</div>
+	</div>
+</div>
+
+</html>

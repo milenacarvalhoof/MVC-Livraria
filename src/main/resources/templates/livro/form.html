@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout.html}">
+<meta charset="UTF-8">
+<div layout:fragment="content">
+	<div class="alert alert-primary" th:if="${mensagem != null}" th:text="${mensagem}">
+	</div>
+	<div class="card">
+		<div class="card-header">
+			<p class="text-primary">Novo Livro</p>
+		</div>
+		<div class="card-body">
+			<form method="POST" th:object="${livro}" th:action="@{/livro/novo}">
+				<input type="hidden" th:field="*{id}">
+				<div class="form-group mb-3">
+					<label for="tema">Tema:</label> 
+					<input
+						class="form-control" type="text" th:field="*{tema}" required></input>
+					<div class="text-danger" th:if="${#fields.hasErrors('tema')}" th:errors="*{tema}"></div>	
+				</div>
+				<div class="form-group mb-3">
+					<label for="autor">Autor:</label> 
+					<select class="form-select" th:field="*{autor}">
+						<option th:each="autor:${listaAutores}" th:value="${autor.id}" th:text="${autor.nome}"></option>
+					</select>
+					<div class="text-danger" th:if="${#fields.hasErrors('tema')}" th:errors="*{tema}"></div>	
+				</div>
+				<div class="form-group mb-3">
+					<label for="qtdPaginas">Quantidade de Páginas:</label> 
+					<input
+						class="form-control" type="text" th:field="*{qtdPaginas}" required></input>
+					<div class="text-danger" th:if="${#fields.hasErrors('qtdPaginas')}" th:errors="*{qtdPaginas}"></div>	
+				</div>				
+				<button type="submit" class="btn btn-primary">Salvar Livro</button>
+			</form>
+		</div>
+	</div>
+</div>
+
+</html>

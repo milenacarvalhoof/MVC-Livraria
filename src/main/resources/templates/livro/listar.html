@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout.html}">
+<meta charset="UTF-8">
+<div layout:fragment="content">
+	<div class="alert alert-primary" th:if="${#lists.isEmpty(lista)}">
+		Nenhum livro encontrado!
+	</div>
+	<div class="alert alert-primary" th:if="${mensagem != null}" th:text="${mensagem}"></div>
+	<div class="card mb-3">
+		<div class="card-header">
+			<p class="text-primary">Filtrar Livro</p>
+		</div>
+		<div class="card-body">
+			<form method="GET">
+				<div class="form-group mb-3">
+					<label for="tema">Tema:</label> 
+					<input
+						class="form-control" type="text" name="tema" th:value="${tema}"></input>	
+				</div>
+				<button type="submit" class="btn btn-primary">Pesquisar Livro</button>
+			</form>
+		</div>
+	</div>
+	<div th:if="${not #lists.isEmpty(lista)}">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Tema</th>
+					<th>Autor</th>
+					<th>Quantidade de Páginas</th>
+					<th>Opções</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="livro : ${lista}">
+					<td th:text="${livro.id}"></td>
+					<td th:text="${livro.tema}"></td>
+					<td th:text="${livro.autor.nome}"></td>
+					<td th:text="${livro.qtdPaginas}"></td>
+					<td><a class="btn btn-primary btn-sm" th:href="@{/livro/editar(id=${livro.id})}">Editar</a>
+					<a class="btn btn-primary btn-sm" th:href="@{/livro/excluir(id=${livro.id})}" onclick="return confirm('Você realmente deseja excluir esse livro?')">Excluir</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+</html>
